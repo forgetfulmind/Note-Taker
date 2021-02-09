@@ -1,7 +1,8 @@
 // Dependencies
 let express = require("express");
 let path = require("path");
-let fs = require("fs")
+let fs = require('fs');
+const { json } = require("express");
 
 // initiate Express and set the Port 
 var app = express();
@@ -32,20 +33,27 @@ app.get("/api/notes", function(req, res) {
 
 //POSTs
 app.post("/api/notes", function(req, res) {
-    // req.body hosts is equal to the JSON post sent from the user
-    // This works because of our body parsing middleware
     let newNote = req.body;
-  
-    // Using a RegEx Pattern to remove spaces from newCharacter
-    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    newNote.iD = newCharacter.iD.replace(/\s+/g, "").toLowerCase();
-  
     console.log(newNote);
-  
-    fs.appendFile("./db/db.json", newNote, ()=>{})
-  
-    res.json(newNote);
+    newNote.id = newNote.title.replace(/\s+/g, "").toLowerCase()
+    fs.readFile("./db/db.json", 'utf-8',(err,data)=>{
+      let oldNote = JSON.parse(data)
+      console.log(oldNote)
+      oldNote.push(newNote)
+      fs.writeFile("./db/db.json", JSON.stringify(oldNote), ()=>{})
+      res.json(newNote);
+    })
+
   });
+
+//DELETEs
+app.delete("./api/notes/:id", function(req,res){
+    // let chosen = req.params.id;
+
+    // console.log(chosen);
+
+    res.send("hello")
+})
 
 
 
