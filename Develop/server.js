@@ -38,8 +38,8 @@ app.post("/api/notes", function(req, res) {
     newNote.id = newNote.title.replace(/\s+/g, "").toLowerCase()
     fs.readFile("./db/db.json", 'utf-8',(err,data)=>{
       let oldNote = JSON.parse(data)
-      console.log(oldNote)
-      oldNote.push(newNote)
+      //console.log(oldNote)
+      oldNote.notes.push(newNote)
       fs.writeFile("./db/db.json", JSON.stringify(oldNote), ()=>{})
       res.json(newNote);
     })
@@ -47,7 +47,7 @@ app.post("/api/notes", function(req, res) {
   });
 
 //DELETEs
-app.delete("./api/notes/:id", function(req,res){
+app.delete("/api/notes/:id", function(req,res){
     // let chosen = req.params.id;
 
     // console.log(chosen);
