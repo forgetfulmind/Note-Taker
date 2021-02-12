@@ -11,6 +11,7 @@ var PORT = process.env.PORT || 8080;
 // connect express to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //Routing 
@@ -31,6 +32,14 @@ app.get("/api/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "./db/db.json"));
   });
 
+app.get("public/assets/js/index.js", function(req, res) {
+    res.sendFile(path.join(__dirname, "./assets/js/index.js"));
+  });
+
+app.get("/public/assets/css/styles.css", function(req, res) {
+    res.sendFile(path.join(__dirname, "./assets/css/styles.css"));
+  });
+
 //POSTs
 app.post("/api/notes", function(req, res) {
     let newNote = req.body;
@@ -39,7 +48,7 @@ app.post("/api/notes", function(req, res) {
     fs.readFile("./db/db.json", 'utf-8',(err,data)=>{
       let oldNote = JSON.parse(data)
       //console.log(oldNote)
-      oldNote.notes.push(newNote)
+      oldNote.push(newNote)
       fs.writeFile("./db/db.json", JSON.stringify(oldNote), ()=>{})
       res.json(newNote);
     })
@@ -48,12 +57,22 @@ app.post("/api/notes", function(req, res) {
 
 //DELETEs
 app.delete("/api/notes/:id", function(req,res){
-    // let chosen = req.params.id;
+    let id = req.params.id;
+    fs.readFile("./db/db.json", 'utf-8',(err,data)=>{
+      let notesArray = JSON.parse(data)
+      
+      for (let i=0; i < notesArray.length; i++){
+        if (notesArray.id !== id){
+          notesArray.splice(i, 1)
+          }
+        }
+        fs.writeFile("./db/db.json", JSON.stringify(notesArray), ()=>{})
+        res.json(notesArray)
+      });
+    })
+    
 
-    // console.log(chosen);
-
-    res.send("hello")
-})
+  
 
 
 
