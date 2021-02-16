@@ -43,7 +43,7 @@ app.get("/assets/css/styles.css", function(req, res) {
 //POSTs
 app.post("/api/notes", function(req, res) {
     let newNote = req.body;
-    console.log(newNote);
+    //console.log(newNote);
     newNote.id = newNote.title.replace(/\s+/g, "").toLowerCase()
     fs.readFile("./db/db.json", 'utf-8',(err,data)=>{
       let oldNote = JSON.parse(data)
