@@ -18,6 +18,8 @@
 
   [Questions](#questions)
 
+  [ScreenShots](#screenShots)
+
 
   <h3><a name="install">Installation:</a></h3>
 
@@ -48,4 +50,10 @@
   gitHub Link: <a href="https://github.com/forgetfulmind">https://github.com/forgetfulmind</a>
 
   eMail: forgetfulmind@gmail.com
+
+<a name="screenShots"><h3>Screen Shots:</h3></a>  
+
+![screenshot 1](./screenshot1.jpg)
+![screenshot 2](./screenshot2.jpg)
+
 
