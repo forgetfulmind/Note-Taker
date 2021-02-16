@@ -58,11 +58,13 @@ app.post("/api/notes", function(req, res) {
 //DELETEs
 app.delete("/api/notes/:id", function(req,res){
     let id = req.params.id;
+    console.log(id)
     fs.readFile("./db/db.json", 'utf-8',(err,data)=>{
       let notesArray = JSON.parse(data)
       
       for (let i=0; i < notesArray.length; i++){
-        if (notesArray.id !== id){
+        console.log(notesArray[i].id)
+        if (notesArray[i].id === id){
           notesArray.splice(i, 1)
           }
         }
